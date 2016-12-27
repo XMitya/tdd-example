@@ -3,6 +3,7 @@ package ru.ifmo.calculator;
 import org.junit.Before;
 import org.junit.Test;
 
+import static org.hamcrest.core.IsEqual.*;
 import static org.junit.Assert.*;
 
 /**
@@ -19,30 +20,30 @@ public class CalculatorTest {
 
     @Test
     public void testPlus() {
-        assertEquals(7.0, calc.calculate("2 + 5"), 0.0);
-        assertEquals(10.0, calc.calculate("2 + 5 + 3"), 0.0);
+        assertThat(7.0, equalTo(calc.calculate("2 + 5")));
+        assertThat(10.0, equalTo(calc.calculate("2 + 5 + 3")));
     }
 
     @Test
     public void testMinus() {
-        assertEquals(7.0, calc.calculate("10 - 3"), 0.0);
-        assertEquals(2.0, calc.calculate("10 - 3 - 5"), 0.0);
+        assertThat(7.0, equalTo(calc.calculate("10 - 3")));
+        assertThat(2.0, equalTo(calc.calculate("10 - 3 - 5")));
     }
 
     @Test
     public void testMultiply() {
-        assertEquals(4.0, calc.calculate("2 * 2"), 0.0);
-        assertEquals(8.0, calc.calculate("4 * 2"), 0.0);
+        assertThat(4.0, equalTo(calc.calculate("2 * 2")));
+        assertThat(8.0, equalTo(calc.calculate("4 * 2")));
     }
 
     @Test
     public void testDivide() {
-        assertEquals(4.0, calc.calculate("8 / 2"), 0.0);
-        assertEquals(2.5, calc.calculate("5 / 2"), 0.0);
+        assertThat(4.0, equalTo(calc.calculate("8 / 2")));
+        assertThat(2.5, equalTo(calc.calculate("5 / 2")));
     }
 
     @Test
     public void testComplex() {
-        assertEquals(24.0, calc.calculate("2 + 4 * 6 - 10 / 5"), 0.0);
+        assertThat(24.0, equalTo(calc.calculate("2 + 4 * 6 - 10 / 5")));
     }
 }

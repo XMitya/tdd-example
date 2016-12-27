@@ -5,6 +5,7 @@ import org.junit.Test;
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
 
+import static org.hamcrest.core.IsEqual.equalTo;
 import static org.junit.Assert.*;
 
 /**
@@ -15,7 +16,7 @@ public class MainTest {
     public void testJoinString() throws Exception {
         String[] args = {"12", "+", "10", "-", "30", "*", "4"};
 
-        assertEquals("12+10-30*4", Main.joinString(args));
+        assertThat("12+10-30*4", equalTo(Main.joinString(args)));
     }
 
     @Test
@@ -32,6 +33,6 @@ public class MainTest {
 
         String res = new String(bout.toByteArray());
 
-        assertEquals("Result: 10.0\n", res);
+        assertThat("Result: 10.0\n", equalTo(res));
     }
 }
