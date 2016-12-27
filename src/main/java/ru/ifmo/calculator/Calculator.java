@@ -1,6 +1,7 @@
 package ru.ifmo.calculator;
 
-import java.util.Stack;
+import java.util.Deque;
+import java.util.LinkedList;
 import java.util.StringTokenizer;
 
 /**
@@ -10,17 +11,17 @@ public class Calculator {
     public double calculate(String expression) {
         expression = expression.replaceAll("[\t\n ]", "") + "=";
 
-        String operator="*/+-=";
+        String operator = "*/+-=";
 
         StringTokenizer tokenizer = new StringTokenizer(expression, operator, true);
 
-        Stack operatorStack = new Stack();
-        Stack valueStack = new Stack();
+        Deque<String> operatorStack = new LinkedList<>();
+        Deque<String> valueStack = new LinkedList<>();
 
-        while(tokenizer.hasMoreTokens()) {
+        while (tokenizer.hasMoreTokens()) {
             String token = tokenizer.nextToken();
 
-            if(operator.indexOf(token) < 0)
+            if(!operator.contains(token))
                 valueStack.push(token);
             else
                 operatorStack.push(token);
@@ -28,39 +29,43 @@ public class Calculator {
             resolve(valueStack, operatorStack);
         }
 
-        String lastOne = (String)valueStack.pop();
+        String lastOne = valueStack.pop();
 
         return Double.parseDouble(lastOne);
     }
 
     private int getPriority(String op) {
-        if(op.equals("*") || op.equals("/"))
-            return 1;
+        switch (op) {
+            case "*":
+            case "/":
+                return 1;
 
-        else if(op.equals("+") || op.equals("-"))
-            return 2;
+            case "+":
+            case "-":
+                return 2;
 
-        else if(op.equals("="))
-            return 3;
+            case "=":
+                return 3;
 
-        else
-            return Integer.MIN_VALUE;
+            default:
+                return Integer.MIN_VALUE;
+        }
     }
 
-    private void resolve(Stack values, Stack operators) {
-        while(operators.size() >= 2) {
-            String first = (String)operators.pop();
-            String second = (String)operators.pop();
+    private void resolve(Deque<String> values, Deque<String> operators) {
+        while (operators.size() >= 2) {
+            String first = operators.pop();
+            String second = operators.pop();
 
-            if(getPriority(first) < getPriority(second)) {
+            if (getPriority(first) < getPriority(second)) {
                 operators.push(second);
                 operators.push(first);
 
                 return;
             }
             else {
-                String firstValue = (String)values.pop();
-                String secondValue = (String)values.pop();
+                String firstValue = values.pop();
+                String secondValue = values.pop();
 
                 values.push(getResults(secondValue, second, firstValue));
                 operators.push(first);
@@ -72,19 +77,21 @@ public class Calculator {
         double op1 = Double.parseDouble(operand1);
         double op2 = Double.parseDouble(operand2);
 
-        if(operator.equals("*"))
-            return "" + (op1 * op2);
+        switch (operator) {
+            case "*":
+                return "" + (op1 * op2);
 
-        else if(operator.equals("/"))
-            return "" + (op1 / op2);
+            case "/":
+                return "" + (op1 / op2);
 
-        else if(operator.equals("+"))
-            return "" + (op1 + op2);
+            case "+":
+                return "" + (op1 + op2);
 
-        else if(operator.equals("-"))
-            return "" + (op1 - op2);
+            case "-":
+                return "" + (op1 - op2);
 
-        else
-            return null;
+            default:
+                return null;
+        }
     }
 }
