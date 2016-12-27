@@ -1,20 +1,24 @@
 package ru.ifmo.calculator;
 
-import junit.framework.TestCase;
+import org.junit.Test;
 
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
 
+import static org.junit.Assert.*;
+
 /**
  * Created by xmitya on 27.12.16.
  */
-public class MainTest extends TestCase {
+public class MainTest {
+    @Test
     public void testJoinString() throws Exception {
         String[] args = {"12", "+", "10", "-", "30", "*", "4"};
 
         assertEquals("12+10-30*4", Main.joinString(args));
     }
 
+    @Test
     public void testMain() throws Exception {
         PrintStream origOut = System.out;
 

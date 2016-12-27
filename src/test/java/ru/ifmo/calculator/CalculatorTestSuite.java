@@ -1,17 +1,13 @@
 package ru.ifmo.calculator;
 
-import junit.framework.TestSuite;
+import org.junit.runner.RunWith;
+import org.junit.runners.Suite;
 
 /**
  * Created by xmitya on 27.12.16.
  */
-public class CalculatorTestSuite extends TestSuite {
-    public static TestSuite suite() {
-        TestSuite suite = new TestSuite("Calculator test suite");
+@RunWith(Suite.class)
+@Suite.SuiteClasses({CalculatorTest.class, MainTest.class})
+public class CalculatorTestSuite {
 
-        suite.addTest(new TestSuite(CalculatorTest.class));
-        suite.addTest(new TestSuite(MainTest.class));
-
-        return suite;
-    }
 }
